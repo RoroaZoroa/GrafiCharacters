@@ -156,13 +156,15 @@ def draw_miko(state):
     glPopMatrix()
 
 
-# === WRAPPER PARA EL MENÚ DE SELECCIÓN ===
-class _NeutralState:
-    """Estado neutral mínimo para la pose base del Mapache."""
+# === GLOBAL STATE ===
+class _MapacheState:
+    """Estado global para la pose base del Mapache."""
     color_miko = [0.65, 0.65, 0.65]   # Gris mapache original
     expresion = "normal"
     movimiento = "quieto"
 
+state = _MapacheState()
+
 def draw_neutral():
-    """Dibuja al Mapache Miko en pose neutral sin depender de su proyecto."""
-    draw_miko(_NeutralState())
+    """Dibuja al Mapache Miko en pose neutral."""
+    draw_miko(state)

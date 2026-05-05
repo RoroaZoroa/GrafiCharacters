@@ -591,13 +591,14 @@ class ChefSaiba:
 # === WRAPPER PARA EL MENÚ DE SELECCIÓN ===
 _chef_instance = None
 
-def draw_neutral():
+def get_chef():
     global _chef_instance
     if _chef_instance is None:
         _chef_instance = ChefSaiba()
-        # Ajustes iniciales para la vitrina
-        _chef_instance.pos_z = 0.0   # Quitar el offset de 8.0 del juego original
-        _chef_instance.rot_y = 180.0 # Que mire a la cámara
+        _chef_instance.pos_z = 0.0   
+        _chef_instance.rot_y = 180.0 
         _chef_instance.current_action = "IDLE"
-        
-    _chef_instance.draw()
+    return _chef_instance
+
+def draw_neutral():
+    get_chef().draw()

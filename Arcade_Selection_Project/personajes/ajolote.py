@@ -11,8 +11,6 @@ def draw_cube(x, y, z, sx, sy, sz, r, g, b):
     glPopMatrix()
 
 def draw_axolotl_full(state):
-    # Desactivamos iluminación para el look Minecraft
-    glDisable(GL_LIGHTING)
     
     rosa_cuerpo = [1.0, 0.75, 0.8]
     rosa_fuerte = [0.85, 0.2, 0.5]
@@ -89,16 +87,16 @@ def draw_axolotl_full(state):
         glPopMatrix()
 
     glPopMatrix()
-    glEnable(GL_LIGHTING)
 
 
-# === WRAPPER PARA EL MENÚ DE SELECCIÓN ===
-class _NeutralState:
-    """Estado neutral mínimo para la pose base del Ajolote."""
+# === GLOBAL STATE ===
+class _AjoloteState:
     expresion = "normal"
     movimiento = "quieto"
     frame_animacion = 0
 
+state = _AjoloteState()
+
 def draw_neutral():
-    """Dibuja al Ajolote en T-Pose / pose neutral sin depender de su proyecto."""
-    draw_axolotl_full(_NeutralState())
+    """Dibuja al Ajolote en pose neutral."""
+    draw_axolotl_full(state)

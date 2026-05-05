@@ -7,6 +7,7 @@ class GameState:
         
         # Índice del personaje que está resaltado actualmente (el cursor)
         self.cursor_index = 0
+        self.cursor_index_p2 = 0
         
         # Selección de jugadores
         self.jugador1_seleccion = None
