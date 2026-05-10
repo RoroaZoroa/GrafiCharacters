@@ -125,7 +125,7 @@ class CharacterManager:
 
     def set_walking(self, index, walking):
         if index == 0: # Ajolote
-            ajolote.state.movimiento = "giro" if walking else "quieto"
+            ajolote.state.movimiento = "caminando" if walking else "quieto"
         elif index == 1: # Chef
             chef.get_chef().current_action = "WALK" if walking else "IDLE"
         elif index == 2: # Knuckles
