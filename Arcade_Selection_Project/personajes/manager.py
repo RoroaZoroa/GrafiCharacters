@@ -12,7 +12,9 @@ class CharacterManager:
         # Estado para Knuckles
         self.knuckles_anim = {
             "punch": 0.0,
-            "expresion": 0
+            "expresion": 0,
+            "walking": False,
+            "walk_cycle": 0.0
         }
         # Temporizador para la animación especial (para que no sea infinita)
         self.special_timer = 0.0
@@ -42,6 +44,12 @@ class CharacterManager:
             # Velocidad de golpes más moderada
             self.knuckles_anim["punch"] += dt * 4
             
+        if self.knuckles_anim["walking"]:
+            self.knuckles_anim["walk_cycle"] += dt * 10
+        else:
+            # Reset suave de la caminata si se detiene
+            self.knuckles_anim["walk_cycle"] = 0
+            
         # --- PINGUINO / ROBOT ---
         for mod in [pinguino, robot]:
             if hasattr(mod, 'state'):
@@ -52,6 +60,11 @@ class CharacterManager:
                     if mod.state.reaction_timer > mod.state.reaction_duration:
                         mod.state.reaction_type = None
                         mod.state.reaction_timer = 0
+                
+                if mod.state.walking:
+                    mod.state.animation_angle += dt * 10
+                    if hasattr(mod.state, 'tail_angle'):
+                        mod.state.tail_angle += dt * 15
 
     def trigger_characteristic_anim(self, index):
         """Activa la animación especial con un tiempo de vida de 3 segundos"""
@@ -109,5 +122,19 @@ class CharacterManager:
         elif index == 5:
             exprs = ["neutral", "happy", "sad", "surprised", "angry", "scared", "doubt"]
             robot.state.expression = exprs[expr_idx % len(exprs)]
+
+    def set_walking(self, index, walking):
+        if index == 0: # Ajolote
+            ajolote.state.movimiento = "giro" if walking else "quieto"
+        elif index == 1: # Chef
+            chef.get_chef().current_action = "WALK" if walking else "IDLE"
+        elif index == 2: # Knuckles
+            self.knuckles_anim["walking"] = walking
+        elif index == 3: # Mapache
+            mapache.state.movimiento = "caminar" if walking else "quieto"
+        elif index in [4, 5]: # Pinguino, Robot
+            mod = pinguino if index == 4 else robot
+            if hasattr(mod, 'state'):
+                mod.state.walking = walking
 
 manager = CharacterManager()
